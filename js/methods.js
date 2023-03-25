@@ -1,13 +1,12 @@
-// session : {
-// name: Meyling Arias
-// nickname: mespinoza 
-// }
+const nickName = ''
+
 const verifySession = () =>{
   const session = JSON.parse(localStorage.getItem('session'))
   if(!session){
     console.log('no hay session');
-  window.location.assign('http://127.0.0.1:5500/login.html')
+  window.location.assign('../login.html')
   }
+
 }
 verifySession()
 
