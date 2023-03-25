@@ -48,3 +48,10 @@ body {
       background-size: cover;
   }
 
+  .cursor{
+    cursor: pointer;
+  }
+
+  .bg-black{
+   background-color: #060606 !important;
+  }
