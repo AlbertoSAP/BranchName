@@ -91,7 +91,7 @@ const register = async () => {
       confirmPassword.value
     );
     if (isvalid) {
-      var firstCharacterOfTheLastName = lastName.value.charAt(0).toLowerCase();
+      var firstCharacterOfTheLastName = name.value.charAt(0).toLowerCase();
       let nickname = `${firstCharacterOfTheLastName}${lastName.value.toLowerCase()}`;
       const loginInfomation = {
         nickname: nickname,
