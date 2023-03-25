@@ -1,12 +1,17 @@
-const nickName = ''
+
+const getLocalInfomation = () => JSON.parse(localStorage.getItem('session'))
 
 const verifySession = () =>{
-  const session = JSON.parse(localStorage.getItem('session'))
+  const session = getLocalInfomation()
   if(!session){
     console.log('no hay session');
   window.location.assign('../login.html')
   }
-
+else{
+  let perfilName = document.getElementById("namePerfil");
+  console.log(session);
+  perfilName.innerHTML = `Hi ${session.name}!` 
+}
 }
 verifySession()
 
@@ -24,6 +29,7 @@ function searchAndLoadData(validate = false) {
 }
 
 function generateBranchName(example = false) {
+ const {nickname} = getLocalInfomation()
   const isValid = example ? true : validateEmpty();
   if (isValid) {
     let {
@@ -35,7 +41,7 @@ function generateBranchName(example = false) {
       contentNameBranch,
     } = searchAndLoadData();
     const tasknameReplace = taskname.value.replace(/\s/g, "-");
-    const result = `aacevedo/${where.value}/${whatisit.value}/${tasknameReplace}-WF-${tasknumber.value}`;
+    const result = `${nickname}/${where.value}/${whatisit.value}/${tasknameReplace}-WF-${tasknumber.value}`;
     nameBranch.innerHTML = result;
     result && (contentNameBranch.style.display = "block");
     return;
@@ -46,9 +52,8 @@ function generateBranchName(example = false) {
 
 function runExample() {
   let { taskname, where, whatisit, tasknumber } = searchAndLoadData();
-  taskname.value =
-    "Archived programs showing in community search on marketing site";
-  where.value = "searchPublicCommunities";
+  taskname.value = "Archived programs showing in community search on marketing site";
+  where.value = "Community";
   whatisit.value = "fix";
   tasknumber.value = "1208601";
   generateBranchName(true);
@@ -95,3 +100,8 @@ const alert2 = (text = "", type = "info") => {
     },
   }).showToast();
 };
+
+const logout = () =>{
+  localStorage.clear()
+  window.location.reload()
+}
