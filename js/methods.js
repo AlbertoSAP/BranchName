@@ -4,7 +4,7 @@ const verifySession = () => {
   const session = getLocalInfomation();
   if (!session) {
     console.log("no hay session");
-    window.location.assign("../login.html");
+    window.location.assign("login.html");
   } else {
     let perfilName = document.getElementById("namePerfil");
     console.log(session);
