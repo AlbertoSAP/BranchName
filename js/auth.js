@@ -103,7 +103,7 @@ const register = async () => {
       try {
         await registerPost(loginInfomation);
         alert2("Has been successfully registered!", "info");
-        window.location.assign("../login.html");
+        window.location.assign("login.html");
       } catch (error) {
         alert2("Error trying to register, please try again.!", "error");
       }
@@ -131,7 +131,7 @@ const login = async () => {
             nickname: userInfomation.nickname,
             name: `${userInfomation.name} ${userInfomation.lastName}`,
           });
-          window.location.assign("../index.html");
+          window.location.assign("/index.html");
         } else {
           alert2("Incorrect password or email, please check.", "error");
         }
