@@ -1,0 +1,13 @@
+.moving-arrow {
+  display: inline-block;
+  animation: slideX 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes slideX {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(12px); /* Ajusta la distancia */
+  }
+}

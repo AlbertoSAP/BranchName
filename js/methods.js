@@ -1,19 +1,17 @@
+const getLocalInfomation = () => JSON.parse(localStorage.getItem("session"));
 
-const getLocalInfomation = () => JSON.parse(localStorage.getItem('session'))
-
-const verifySession = () =>{
-  const session = getLocalInfomation()
-  if(!session){
-    console.log('no hay session');
-  window.location.assign('../login.html')
+const verifySession = () => {
+  const session = getLocalInfomation();
+  if (!session) {
+    console.log("no hay session");
+    window.location.assign("../login.html");
+  } else {
+    let perfilName = document.getElementById("namePerfil");
+    console.log(session);
+    perfilName.innerHTML = `Hi ${session.name}!`;
   }
-else{
-  let perfilName = document.getElementById("namePerfil");
-  console.log(session);
-  perfilName.innerHTML = `Hi ${session.name}!` 
-}
-}
-verifySession()
+};
+verifySession();
 
 function searchAndLoadData(validate = false) {
   let taskname = document.getElementById("taskname");
@@ -28,8 +26,27 @@ function searchAndLoadData(validate = false) {
     : { taskname, where, whatisit, tasknumber, nameBranch, contentNameBranch };
 }
 
+function copyNameBranch() {
+  const contentNameBranch = document.getElementById("nameBranch");
+  const icon = document.getElementById("copy-icon");
+
+  icon.className = "bi bi-check-lg pointer";
+
+  navigator.clipboard
+    .writeText(contentNameBranch.textContent)
+    .then(() => {
+      alert2(`✅ ¡Listo! Copiado al portapapeles.`, "info");
+      setTimeout(() => {
+        icon.className = "bi bi-clipboard pointer";
+      }, 1000);
+    })
+    .catch((err) => {
+      alert2("❌ Error al copiar.", "error");
+    });
+}
+
 function generateBranchName(example = false) {
- const {nickname} = getLocalInfomation()
+  const { nickname } = getLocalInfomation();
   const isValid = example ? true : validateEmpty();
   if (isValid) {
     let {
@@ -52,7 +69,8 @@ function generateBranchName(example = false) {
 
 function runExample() {
   let { taskname, where, whatisit, tasknumber } = searchAndLoadData();
-  taskname.value = "Archived programs showing in community search on marketing site";
+  taskname.value =
+    "Archived programs showing in community search on marketing site";
   where.value = "Community";
   whatisit.value = "fix";
   tasknumber.value = "1208601";
@@ -101,7 +119,7 @@ const alert2 = (text = "", type = "info") => {
   }).showToast();
 };
 
-const logout = () =>{
-  localStorage.clear()
-  window.location.reload()
-}
+const logout = () => {
+  localStorage.clear();
+  window.location.reload();
+};
