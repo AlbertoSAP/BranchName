@@ -146,7 +146,6 @@ const login = async () => {
 
 //   register post
 const registerPost = async (RegisterInfomation) => {
-  console.log("post");
   try {
     await axios.post(`${urlApi}/Users.json`, RegisterInfomation, headers);
   } catch (error) {
