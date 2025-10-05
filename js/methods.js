@@ -1,3 +1,8 @@
+const urlApi = "https://namebranch-66f26-default-rtdb.firebaseio.com";
+let headers = {
+  "Contenet-Type": "application/json",
+};
+
 const getLocalInfomation = () => JSON.parse(localStorage.getItem("session"));
 
 const verifySession = () => {
@@ -45,7 +50,7 @@ function copyNameBranch() {
     });
 }
 
-function generateBranchName(example = false) {
+async function generateBranchName(example = false) {
   const { nickname } = getLocalInfomation();
   const isValid = example ? true : validateEmpty();
   if (isValid) {
@@ -61,20 +66,29 @@ function generateBranchName(example = false) {
     const result = `${nickname}/${where.value}/${whatisit.value}/${tasknameReplace}-WF-${tasknumber.value}`;
     nameBranch.innerHTML = result;
     result && (contentNameBranch.style.display = "block");
+    !example &&
+      result &&
+      (await saveBranchInfo({
+        taskname,
+        where,
+        whatisit,
+        tasknumber,
+        result: result ?? "",
+      }));
     return;
   } else {
     return alert2("Por favor llene todos los campos!", "error");
   }
 }
 
-function runExample() {
+async function runExample() {
   let { taskname, where, whatisit, tasknumber } = searchAndLoadData();
   taskname.value =
     "Archived programs showing in community search on marketing site";
   where.value = "Community";
   whatisit.value = "fix";
   tasknumber.value = "1208601";
-  generateBranchName(true);
+  await generateBranchName(true);
 }
 
 function resetForm() {
@@ -122,4 +136,33 @@ const alert2 = (text = "", type = "info") => {
 const logout = () => {
   localStorage.clear();
   window.location.reload();
+};
+
+const saveBranchInfo = async ({
+  taskname,
+  where,
+  whatisit,
+  tasknumber,
+  result: branch,
+}) => {
+  const { nickname } = getLocalInfomation();
+  try {
+    const result = await axios.post(
+      `${urlApi}/BranchInfo.json`,
+      {
+        [nickname]: {
+          taskname: taskname.value,
+          where: where.value,
+          whatisit: whatisit.value,
+          tasknumber: tasknumber.value,
+          nameBranch: branch,
+        },
+      },
+      headers
+    );
+    console.log("[save]", result);
+  } catch (error) {
+    console.log("[error]", error);
+    return error;
+  }
 };
