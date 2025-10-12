@@ -18,8 +18,10 @@ const branchsInfo = async () => {
   return result;
 };
 
-window["copyNameBranchRow"] = function (branch) {
-  const icon = document.getElementById("copy-icon");
+window["copyNameBranchRow"] = function (branch, index) {
+  const icon = document.getElementById(`copy-icon${index}`);
+  console.log({ branch, index });
+
   icon.className = "bi bi-check-lg pointer";
 
   navigator.clipboard
@@ -55,7 +57,8 @@ const generateBodyTable = async () => {
       <td>${branch}</td>
       <td> 
           <div class="d-flex justify-content-center"> 
-            <i id="copy-icon" onclick="copyNameBranchRow('${branch}')"
+            <i id='copy-icon${index + 1}' 
+            onclick="copyNameBranchRow('${branch}','${index + 1}')"
             role="button"
             class="bi bi-clipboard pointer mt-1">
             </i>
