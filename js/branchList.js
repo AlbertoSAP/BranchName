@@ -51,8 +51,9 @@ window["deleteNameBranchRow"] = async function (branch, index, key) {
   const icon = document.getElementById(`delete-icon${index}`);
   console.log({ branch, index });
 
-  icon.className = "bi bi-arrow-clockwise pointer";
+  icon.className = "bi bi-arrow-clockwise";
   rotateIconContinuously(icon);
+  icon.onclick = () => console.log("click disable");
 
   try {
     await axios.delete(`${urlApi}/BranchInfo/${key}.json`);
@@ -87,7 +88,8 @@ const generateBodyTable = async () => {
             <i id='delete-icon${index + 1}' 
             onclick="deleteNameBranchRow('${branch}','${index + 1}','${key}')"
             role="button"
-            class="bi bi-trash pointer mt-1">
+            class="bi bi-trash pointer mt-1 pointer text-danger"
+            >
             </i>
           </div>
       </td>
