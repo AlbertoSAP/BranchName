@@ -5,8 +5,13 @@ export const headers = {
 
 export const pipeGetInfoFirebase = (data) => {
   const firebaseInfo = [];
-  Object.keys(data).map((key) => {
-    firebaseInfo.push(data[key]);
+
+  if (!data) return firebaseInfo;
+  const items = Object.keys(data);
+  if (!items.length) return firebaseInfo;
+
+  items.map((key) => {
+    firebaseInfo.push({ ...data[key], key });
   });
   return firebaseInfo;
 };
